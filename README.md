@@ -677,21 +677,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## 🙏 Acknowledgments
 
-- **Clean Architecture** - Robert C. Martin
-- **Domain-Driven Design** - Eric Evans
-- **CQRS Pattern** - Greg Young
-- **MediatR** - Jimmy Bogard
-- **FluentValidation** - Jeremy Skinner
-- **Polly** - App-vNext team
-- **CommunityToolkit.Mvvm** - Microsoft .NET Community
 
 ## 📞 Contact
 
-**Project Link**: [https://github.com/yourusername/appointment-system](https://github.com/yourusername/appointment-system)
-
-**Issues**: [https://github.com/yourusername/appointment-system/issues](https://github.com/yourusername/appointment-system/issues)
+**Project Link**: https://github.com/rcmagramo/AppointmentSystemExam.git
 
 ---
 
