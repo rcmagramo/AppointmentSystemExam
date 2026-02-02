@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentSystem.API", "Ap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentSystem.WPF", "AppointmentSystem.WPF\AppointmentSystem.WPF.csproj", "{BF734886-D48D-4F1F-B444-064285B3404C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{8804D8A8-0AE5-4F57-80DB-EA37F5F87B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8804D8A8-0AE5-4F57-80DB-EA37F5F87B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8804D8A8-0AE5-4F57-80DB-EA37F5F87B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF734886-D48D-4F1F-B444-064285B3404C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF734886-D48D-4F1F-B444-064285B3404C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF734886-D48D-4F1F-B444-064285B3404C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF734886-D48D-4F1F-B444-064285B3404C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{E40D2F55-4BA0-4525-AB81-8FC158CF3237} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{E939982B-CFE9-4AA0-87D2-63736D2750D0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{8804D8A8-0AE5-4F57-80DB-EA37F5F87B12} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BF734886-D48D-4F1F-B444-064285B3404C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D26E9051-A780-411B-8C3B-CB014C2F1B49}

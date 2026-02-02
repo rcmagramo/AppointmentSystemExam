@@ -1,0 +1,156 @@
+﻿<Window x:Class="AppointmentSystem.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Appointment Management System" Height="650" Width="950"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Appointment Management System" FontSize="24" FontWeight="Bold"
+                       Foreground="#2E5090" Margin="0,0,0,5"/>
+            <Separator/>
+        </StackPanel>
+
+        <!-- Error Bar -->
+        <Border Grid.Row="1" Background="#FFEBEE" BorderBrush="#F44336" BorderThickness="1"
+                Padding="10" Margin="0,0,0,10"
+                Visibility="{Binding ErrorMessage, Converter={StaticResource NullToCollapsedConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="⚠" FontSize="16" Margin="0,0,10,0" Foreground="#F44336"/>
+                <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#C62828"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Appointments List -->
+            <GroupBox Header="Appointments" Grid.Column="0" Margin="0,0,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Search Box -->
+                    <Grid Grid.Row="0" Margin="0,5,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Search:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBox Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Padding="5" VerticalAlignment="Center"/>
+                        <Button Grid.Column="2" Content="✕" Command="{Binding ClearSearchCommand}"
+                                Width="30" Height="30" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <!-- DataGrid -->
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding Appointments}"
+                              SelectedItem="{Binding SelectedAppointment}"
+                              AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                            <DataGridTextColumn Header="Patient" Binding="{Binding PatientName}" Width="*"/>
+                            <DataGridTextColumn Header="Date" Binding="{Binding AppointmentDate, StringFormat='MM/dd/yyyy hh:mm tt'}" Width="150"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Loading Overlay -->
+                    <Border Grid.Row="1" Background="#80FFFFFF"
+                            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Loading..." FontSize="16" Foreground="#2E5090"/>
+                            <ProgressBar IsIndeterminate="True" Width="200" Height="10" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Pagination -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,5">
+                        <Button Content="◄ Previous" Command="{Binding PreviousPageCommand}"
+                                Width="90" Padding="5" Margin="0,0,5,0"/>
+                        <TextBlock VerticalAlignment="Center" Margin="10,0">
+                            <Run Text="Page "/>
+                            <Run Text="{Binding CurrentPage, Mode=OneWay}"/>
+                            <Run Text=" of "/>
+                            <Run Text="{Binding TotalPages, Mode=OneWay}"/>
+                            <Run Text=" ("/>
+                            <Run Text="{Binding TotalCount, Mode=OneWay}"/>
+                            <Run Text=" total)"/>
+                        </TextBlock>
+                        <Button Content="Next ►" Command="{Binding NextPageCommand}"
+                                Width="90" Padding="5" Margin="5,0,0,0"/>
+                    </StackPanel>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,0,0">
+                        <Button Content="Refresh" Command="{Binding LoadAppointmentsCommand}"
+                                Width="80" Padding="5" Margin="0,0,5,0"/>
+                        <Button Content="New" Command="{Binding PrepareNewAppointmentCommand}"
+                                Width="80" Padding="5" Margin="0,0,5,0" Background="#28A745" Foreground="White"/>
+                        <Button Content="Edit" Command="{Binding EditAppointmentCommand}"
+                                Width="80" Padding="5" Margin="0,0,5,0"/>
+                        <Button Content="Delete" Command="{Binding DeleteAppointmentCommand}"
+                                Width="80" Padding="5" Margin="0,0,5,0" Background="#DC3545" Foreground="White"/>
+                        <Button Content="Export CSV" Command="{Binding ExportToCsvCommand}"
+                                Width="90" Padding="5" Background="#17A2B8" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center"/>
+
+            <!-- Form -->
+            <GroupBox Header="Appointment Details" Grid.Column="2" Margin="5,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="Patient Name" Margin="0,5,0,2"/>
+                    <TextBox Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Date" Margin="0,0,0,2"/>
+                    <DatePicker SelectedDate="{Binding AppointmentDate}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Status" Margin="0,0,0,2"/>
+                    <ComboBox ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Status}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Description" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                             TextWrapping="Wrap" AcceptsReturn="True" Height="100" Padding="5" Margin="0,0,0,15"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Save" Command="{Binding SaveAppointmentCommand}"
+                                Width="80" Padding="5" Margin="0,0,5,0" Background="#28A745" Foreground="White"/>
+                        <Button Content="Cancel" Command="{Binding CancelEditCommand}"
+                                Width="80" Padding="5"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="3" Margin="0,10,0,0">
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="10" Height="10" Fill="Green" Margin="0,0,5,0"/>
+                    <TextBlock Text="Connected | API: https://localhost:7205"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
